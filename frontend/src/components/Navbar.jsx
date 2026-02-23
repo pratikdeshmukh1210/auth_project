@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/AuthSlice";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
+const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
+
 
   return (
     <nav className="w-full bg-white text-gray-500 px-6 py-4 flex items-center justify-between  shadow-lg">
@@ -30,6 +30,14 @@ const Navbar = ({ user }) => {
         </p>
       </div>
 
+ <div className="flex gap-3">
+        <button className="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl font-semibold">
+          Profile
+        </button>
+        <button onClick={handleLogout} className="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-xl font-semibold">
+          Logout
+        </button>
+      </div>
       
       
     <div className="">
@@ -39,4 +47,4 @@ const Navbar = ({ user }) => {
   );
 };
 
-export default Navbar;
+export default Navbar ; 

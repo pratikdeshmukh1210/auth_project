@@ -21,8 +21,32 @@ const Register = ({ setToggle }) => {
         withCredentials: true,
       });
 
+      console.log("register response:", res?.status, res?.data);
+
+      // If API returns user object, set in store and navigate
       if (res?.data?.user) {
         dispatch(setUser(res.data.user));
+        // Try react-router navigation first
+        try {
+          navigate("/home");
+        } catch (navErr) {
+          console.warn("navigate failed, falling back to window.location", navErr);
+          window.location.href = "/home";
+        }
+
+        // Fallback: ensure redirect happens in case navigate didn't render due to timing
+        setTimeout(() => {
+          if (window.location.pathname !== "/home") {
+            window.location.href = "/home";
+          }
+        }, 300);
+
+        return;
+      }
+
+      // If API succeeded but user missing, still navigate to home
+      if (res?.status >= 200 && res?.status < 300) {
+        console.warn("Registration succeeded but no user in response; redirecting to /home");
         navigate("/home");
       }
     } catch (error) {

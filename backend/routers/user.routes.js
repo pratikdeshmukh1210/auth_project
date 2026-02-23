@@ -3,7 +3,7 @@ const {
   registerUSerController,
   loginUserController ,
   getCurrentUser
-} = require("../controller/user.controllers");
+} = require("../controller/user.controller.js");
 
 const { authMiddleware } = require("../middlewares/auth.middleware.js");
 
